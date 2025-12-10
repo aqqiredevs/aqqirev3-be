@@ -1,14 +1,12 @@
 from fastapi import FastAPI
-from app.connection.database import engine, Base
 from fastapi.middleware.cors import CORSMiddleware
-from app.connection.database import Base, engine
 from contextlib import asynccontextmanager
 from app.routes import router
+from app.connection import init_models
 
 @asynccontextmanager
 async def lifespan(_):
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+    await init_models()
     print("[*] Tables ensured on startup")
     yield
 

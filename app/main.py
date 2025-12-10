@@ -18,9 +18,16 @@ from app.connection.database import Base, engine
 from fastapi.security import OAuth2PasswordBearer
 import asyncio
 from fastapi.openapi.utils import get_openapi
+from contextlib import asynccontextmanager
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(_):
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+    print("[*] Tables ensured on startup")
+    yield
 
+app = FastAPI(lifespan=lifespan)
 
 def custom_openapi():
     if app.openapi_schema:
@@ -50,8 +57,6 @@ async def log_headers(request, call_next):
     response = await call_next(request)
     return response
 
-
-
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 origins = [
@@ -64,7 +69,7 @@ origins = [
 app.add_middleware(
     CORSMiddleware,
     # allow_origins=["http://localhost:3000"],
-     allow_origins=["http://localhost:3000", "http://127.0.0.1:3000", "http://localhost:5173", "http://localhost:3001"],
+    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000", "http://localhost:5173", "http://localhost:3001"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -75,9 +80,3 @@ app.include_router(property_router)
 app.include_router(user_router)
 
 app.include_router(property_router)
-
-@app.on_event("startup")
-async def startup_event():
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-    print("Tables ensured on startup")

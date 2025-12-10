@@ -5,17 +5,18 @@ from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.ext.asyncio import async_sessionmaker
 
 from sqlalchemy.ext.declarative import declarative_base
+from dotenv import load_dotenv
+import os
 
+load_dotenv(override=True)
 
 Base = declarative_base()
 
-URL_DATABASE = "postgresql+asyncpg://postgres:admin123@localhost:5432/aqqire"
-
-
+URL_DATABASE = os.getenv("DB_URL")
 
 engine = create_async_engine(
     URL_DATABASE,
-    echo=True,
+    echo=False,
     pool_pre_ping=True,
     # connect_args={"server_settings": {"statement_cache_size": "0"}}
 )

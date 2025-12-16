@@ -12,11 +12,11 @@ from fastapi import HTTPException
 
 
 def get_all_users(db:Session):
-    return db.query(User).all()
+    return db.query(Users).all()
 
 
 async def create_user(db:AsyncSession, data: UserBase):
-    new_user = User()
+    new_user = Users()
 
 # async def get_user_by_email(db: AsyncSession, email:str):
 #     return await db.query(Users).filter(Users.user_email == email).first()
@@ -49,7 +49,6 @@ async def register_user(db: AsyncSession, data: UserCreate):
         user_mobileNumber = data.user_mobileNumber,
         user_lastName = data.user_lastName,
         user_passwrd =hashed_pw
-        
     )
 
 

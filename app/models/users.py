@@ -7,7 +7,7 @@ from sqlalchemy.dialects.postgresql import UUID
 class Users(Base):
     __tablename__ = "users"
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=lambda : str(uuid.uuid4()))
     active_token = Column(String, index=True, nullable=True)
     active = Column(Boolean, index=True, nullable=False, default=True)
     can_post = Column(Boolean, index=True, nullable=False, default=True)

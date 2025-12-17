@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, Boolean, String, ForeignKey
+from sqlalchemy import Column, Integer, Boolean, String, ForeignKey, Float
 from app.connection.database import Base
 from sqlalchemy.orm import relationship
 import uuid
@@ -8,22 +8,57 @@ class Users(Base):
     __tablename__ = "users"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=lambda : str(uuid.uuid4()))
-    active_token = Column(String, index=True, nullable=True)
-    active = Column(Boolean, index=True, nullable=False, default=True)
-    can_post = Column(Boolean, index=True, nullable=False, default=True)
-    city = Column(String, index=True, nullable=True)
-    click_report_instruction = Column(Boolean, index=True, nullable=True, default=False)
-    college_accomplishment = Column(String, index=True, nullable=True)
-    
-    
-    
-    
-    
-    user_email = Column(String, index=True, nullable=False)
-    user_firstName = Column( String, index=True, nullable=False)
-    user_lastName = Column (String, index=True, nullable=False)
-    user_passwrd = Column(String, index=True, nullable=False)
-    user_mobileNumber = Column(String, index=True, nullable=True)
-    # user_subscription = Column(String, index=True, nullable=False)
+    password = Column(String, nullable=False)
+    active = Column(Boolean, index=True, nullable=False)
+    can_post = Column(Boolean, index=True, nullable=False)
+    city = Column(String, index=True, nullable=False)
+    company_name = Column(String, index=True, nullable=False)
+    databank_limit = Column(Integer, index=True, nullable=False)
+    databank_used_space = Column(Integer, index=True, nullable=False)
+    email = Column(String, index=True, nullable=False)
+    first_name = Column(String, index=True, nullable=False)
+    middle_name = Column(String, index=True, nullable=True)
+    last_name = Column(String, index=True, nullable=False)
+    hotel_franchise = Column(String, index=True, nullable=False)
+    icontact_id = Column(Integer, index=True, nullable=False)
+    min_price = Column(Float, index=True, nullable=False)
+    min_room = Column(Float, index=True, nullable=False)
+    own_hotel = Column(String, index=True, nullable=False)
+    phone = Column(String, index=True, nullable=False)
+    post_name = Column(String, index=True, nullable=False)
+    post_years_attended = Column(String, index=True, nullable=False)
+    profile_pic = Column(String, index=True, nullable=False)
+    role = Column(String, index=True, nullable=False)
+    salt = Column(String, index=True, nullable=False)
+    skip_counter = Column(Integer, index=True, nullable=False)
+    staff = Column(Boolean, index=True, nullable=False)
+    state = Column(String, index=True, nullable=False)
+    states_region = Column(String, index=True, nullable=False)
+    street_address = Column(String, index=True, nullable=False)
+    superuser = Column(Boolean, index=True, nullable=False)
+    zip = Column(String, index=True, nullable=False)
+    nickname = Column(String, index=True, nullable=False)
+    unit = Column(String, index=True, nullable=False)
+    profile_description = Column(String, index=True, nullable=False)
+    company_position = Column(String, index=True, nullable=False)
+    company_pic = Column(String, index=True, nullable=False)
+    account_type = Column(String, index=True, nullable=False)
+    license_number = Column(String, index=True, nullable=False)
+    license_type = Column(String, index=True, nullable=False)
+    license_state = Column(String, index=True, nullable=False)
+    license_id = Column(String, index=True, nullable=False)
+    job_title = Column(String, index=True, nullable=False)
+    broker = Column(Boolean, index=True, nullable=False)
+    owner = Column(Boolean, index=True, nullable=False)
+    user_work = Column(String, index=True, nullable=False)
+    work_type = Column(String, index=True, nullable=False)
+    email_cc = Column(String, index=True, nullable=False)
+    company_admin = Column(Boolean, index=True, nullable=False)
+    on_trial = Column(Boolean, index=True, nullable=False)
+    contact_id = Column(String, index=True, nullable=False)
+    hide_history_property = Column(Boolean, index=True, nullable=False)
+    hide_sold_property = Column(Boolean, index=True, nullable=False)
+    user_affiliates = Column(String, index=True, nullable=False)
     
     properties = relationship("Property", back_populates="owner")
+
